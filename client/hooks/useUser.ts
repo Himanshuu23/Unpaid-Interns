@@ -12,7 +12,7 @@ export const useUserDetails = () => {
     if (!email) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/user/${email}`, {
+      const response = await fetch(`https://backend-amber-nine-53.vercel.app/api/user/${email}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

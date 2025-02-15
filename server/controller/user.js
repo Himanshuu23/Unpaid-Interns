@@ -1,25 +1,21 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const getCoordinates = require("../utils/getCoordinates");
 
 const registerUser = async (req, res) => {
   console.log(req.body)
   try {
-    const { name, email, password, address } = req.body;
-    if (!name || !email || !password || !address) {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const { lat, lon } = await getCoordinates(address);
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
       name,
       email,
       password: hashedPassword,
-      address,
-      location: { type: "Point", coordinates: [lon, lat] } 
     });
 
     await user.save();
